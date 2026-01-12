@@ -1,10 +1,16 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import { useFetchCourseData, useIsCourseExistInWishList } from "../hooks";
+import {
+  useFetchCourseData,
+  useIsCourseExistInCart,
+  useIsCourseExistInWishList,
+} from "../hooks";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addToWishlistCourse,
   removeFromWishlistCourse,
+  addToCartCourse,
+  removeFromCartCourse,
 } from "../store/udemySlice";
 const Course = () => {
   const dispatch = useDispatch();
@@ -12,9 +18,14 @@ const Course = () => {
   const coursesData = useFetchCourseData();
 
   const isCourseInWishlist = useIsCourseExistInWishList(id);
+  const isCourseInCart = useIsCourseExistInCart(id);
   function handleAddToWishlist() {
     if (isCourseInWishlist) dispatch(removeFromWishlistCourse(id));
     else dispatch(addToWishlistCourse(id));
+  }
+  function handleAddToCart() {
+    if (isCourseInCart) dispatch(removeFromCartCourse(id));
+    else dispatch(addToCartCourse(id));
   }
 
   if (coursesData.length === 0) {
@@ -291,8 +302,11 @@ const Course = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded transition-colors text-lg shadow-md">
-                    Add to Cart
+                  <button
+                    onClick={handleAddToCart}
+                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded transition-colors text-lg shadow-md"
+                  >
+                    {isCourseInCart ? "Remove From Cart" : "Add to Cart"}
                   </button>
                   <button
                     onClick={handleAddToWishlist}

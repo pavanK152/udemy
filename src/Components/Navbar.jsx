@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const wishListData = useSelector((state) => state.udemy.wishlistCourse);
+  const cartData = useSelector((state) => state.udemy.cartCourses);
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex justify-between items-center h-16">
@@ -39,7 +42,7 @@ const Navbar = () => {
 
             {/* Hide text on very small screens if needed, otherwise show */}
             <span className="hidden sm:block ml-2 text-sm font-medium text-gray-700 group-hover:text-red-500">
-              Wishlist
+              {wishListData.length}
             </span>
           </Link>
 
@@ -64,7 +67,7 @@ const Navbar = () => {
             </svg>
 
             <span className="hidden sm:block ml-2 text-sm font-medium text-gray-700 group-hover:text-indigo-600">
-              Cart
+              {cartData.length}
             </span>
           </Link>
         </div>

@@ -27,3 +27,8 @@ export function useIsCourseExistInWishList(id) {
   const courseIdx = wishListData.findIndex((data) => data.id == id);
   return courseIdx == -1 ? false : true;
 }
+export function useIsCourseExistInCart(id) {
+  const cartData = useSelector((state) => state.udemy.cartCourses);
+  const courseIdx = cartData.findIndex((data) => data.id == id);
+  return courseIdx == -1 ? false : true;
+}
