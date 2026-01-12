@@ -2,7 +2,10 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { useFetchCourseData, useIsCourseExistInWishList } from "../hooks";
 import { useSelector, useDispatch } from "react-redux";
-import { addToWishListCourse } from "../store/udemySlice";
+import {
+  addToWishlistCourse,
+  removeFromWishlistCourse,
+} from "../store/udemySlice";
 const Course = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -10,7 +13,8 @@ const Course = () => {
 
   const isCourseInWishlist = useIsCourseExistInWishList(id);
   function handleAddToWishlist() {
-    dispatch(addToWishListCourse(id));
+    if (isCourseInWishlist) dispatch(removeFromWishlistCourse(id));
+    else dispatch(addToWishlistCourse(id));
   }
 
   if (coursesData.length === 0) {
@@ -294,7 +298,9 @@ const Course = () => {
                     onClick={handleAddToWishlist}
                     className="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-900 font-bold py-3 px-4 rounded transition-colors text-lg"
                   >
-                    Add to wishlist
+                    {isCourseInWishlist
+                      ? "Remove From Wishlist"
+                      : "Add to Wishlist"}
                   </button>
                 </div>
 

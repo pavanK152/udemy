@@ -12,29 +12,51 @@ export const udemySlice = createSlice({
     setCoursedata: (state, action) => {
       state.courses = action.payload;
     },
-    addToWishListCourse: (state, action) => {
+    addToWishlistCourse: (state, action) => {
       const courseIndex = state.wishlistCourse.findIndex(
-        (data) => data.id === action.payload
+        (data) => data.id === Number(action.payload)
       );
       if (courseIndex !== -1) return;
       const course = state.courses.find(
-        (data) => data.id === action.payload.id
+        (data) => data.id === Number(action.payload)
       );
-      state.wishlistCourse = state.wishlistCourse.push(course);
+
+      if (course) {
+        state.wishlistCourse.push(course);
+      }
     },
-    removeFromWishListCourse: (state, action) => {
+    removeFromWishlistCourse: (state, action) => {
       const courseIndex = state.wishlistCourse.findIndex(
-        (data) => data.id === action.payload
+        (data) => data.id === Number(action.payload)
       );
       if (courseIndex === -1) return;
-      const course = state.courses.find((data) => data.id === action.payload);
-      state.wishlistCourse = state.wishlistCourse.splice(courseIndex, 1);
+      state.wishlistCourse.splice(courseIndex, 1);
     },
+    // addToCartCourse: (state, action) => {
+    //   const courseIndex = state.cartCourses.findIndex(
+    //     (data) => data.id === Number(action.payload)
+    //   );
+    //   if (courseIndex !== -1) return;
+    //   const course = state.courses.find(
+    //     (data) => data.id === Number(action.payload)
+    //   );
+
+    //   if (course) {
+    //     state.cartCourses.push(course);
+    //   }
+    // },
+    // removeFromCartCourse: (state, action) => {
+    //   const courseIndex = state.cartCourses.findIndex(
+    //     (data) => data.id === Number(action.payload)
+    //   );
+    //   if (courseIndex === -1) return;
+    //   state.cartCourses.splice(courseIndex, 1);
+    // },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setCoursedata, addToWishListCourse, removeFromWishListCourse } =
+export const { setCoursedata, addToWishlistCourse, removeFromWishlistCourse } =
   udemySlice.actions;
 
 export default udemySlice.reducer;
